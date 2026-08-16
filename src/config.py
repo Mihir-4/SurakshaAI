@@ -80,8 +80,8 @@ class Settings(BaseSettings):
     MODEL_PATH: str           = "./models_store"
     FASTTEXT_MODEL_PATH: str  = "./models_store/nlp/lid.176.bin"
 
-    # Hugging Face model repository for the production mBERT fraud classifier
-    HF_MODEL_ID: str          = "Mihir-01010/surakshaai-mbert"
+    # Optional DL model. Disabled in the free deployment due to memory limits.
+    HF_MODEL_ID: str = ""
 
     @property
     def model_dir(self) -> Path:

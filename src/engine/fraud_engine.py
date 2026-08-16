@@ -43,10 +43,10 @@ class FraudDetectionEngine:
 
 # Production DL model is hosted on Hugging Face.
 # Local path remains available as a fallback for development.
+        # mBERT is disabled in the free deployment.
+        # The production engine uses the ML model + rule engine.
         if settings.HF_MODEL_ID:
             self._load_text_dl(settings.HF_MODEL_ID)
-        elif paths.get("text_dl"):
-            self._load_text_dl(Path(paths["text_dl"]))
 
     def _load_selected_models(self) -> dict:
         path = self.model_dir / "selected_models.json"
@@ -160,7 +160,11 @@ class FraudDetectionEngine:
             "shap_features": [],
             "model_versions": {
                 "text_ml": (self.selected_models.get("text_ml") or {}).get("model_name"),
-                "text_dl": (self.selected_models.get("text_dl") or {}).get("model_name"),
+                "text_dl": (
+                    (self.selected_models.get("text_dl") or {}).get("model_name")
+                    if self.dl_model is not None
+                    else None
+                ),
             },
         }
 
