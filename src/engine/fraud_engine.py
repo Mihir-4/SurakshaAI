@@ -40,7 +40,12 @@ class FraudDetectionEngine:
         self.dl_model = None
         self.dl_tokenizer = None
         self.dl_device = "cpu"
-        if paths.get("text_dl"):
+
+# Production DL model is hosted on Hugging Face.
+# Local path remains available as a fallback for development.
+        if settings.HF_MODEL_ID:
+            self._load_text_dl(settings.HF_MODEL_ID)
+        elif paths.get("text_dl"):
             self._load_text_dl(Path(paths["text_dl"]))
 
     def _load_selected_models(self) -> dict:
@@ -61,22 +66,35 @@ class FraudDetectionEngine:
             logger.warning("Could not load %s: %s", path, exc)
             return None
 
-    def _load_text_dl(self, path: Path) -> None:
-        if not path.exists():
-            logger.warning("Selected DL path does not exist: %s", path)
-            return
+    def _load_text_dl(self, model_source: str | Path) -> None:
         try:
             import torch
             from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
             self.dl_device = "cuda" if torch.cuda.is_available() else "cpu"
-            self.dl_tokenizer = AutoTokenizer.from_pretrained(str(path))
-            self.dl_model = AutoModelForSequenceClassification.from_pretrained(str(path))
+
+            model_source = str(model_source)
+
+            self.dl_tokenizer = AutoTokenizer.from_pretrained(model_source)
+            self.dl_model = AutoModelForSequenceClassification.from_pretrained(
+                model_source
+            )
+
             self.dl_model.to(self.dl_device)
             self.dl_model.eval()
-            logger.info("Loaded selected DL model from %s on %s", path, self.dl_device)
+
+            logger.info(
+                "Loaded selected DL model from %s on %s",
+                model_source,
+                self.dl_device,
+            )
+
         except Exception as exc:
-            logger.warning("Could not load selected DL model from %s: %s", path, exc)
+            logger.warning(
+                "Could not load selected DL model from %s: %s",
+                model_source,
+                exc,
+            )
 
     def predict_text_probability(self, text: str) -> tuple[float | None, dict]:
         cleaned = self.cleaner.clean(text)
