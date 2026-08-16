@@ -1,0 +1,26 @@
+{
+  "url": {
+    "accuracy": 0.899853346539823,
+    "f1_macro": 0.886982039710118,
+    "roc_auc": 0.961906919423171,
+    "pr_auc": 0.9374695189558856,
+    "safe_precision": 0.9097211245342667,
+    "safe_recall": 0.9410541806332559,
+    "fraud_precision": 0.8788787827881639,
+    "fraud_recall": 0.8207898157694204,
+    "fraud_f1": 0.8488416563329354,
+    "fraud_recall_5fpr": 0.7903760814021247
+  },
+  "upi": {
+    "accuracy": 1.0,
+    "f1_macro": 1.0,
+    "roc_auc": 1.0,
+    "pr_auc": 1.0,
+    "safe_precision": 1.0,
+    "safe_recall": 1.0,
+    "fraud_precision": 1.0,
+    "fraud_recall": 1.0,
+    "fraud_f1": 1.0,
+    "fraud_recall_5fpr": 1.0
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "samples": 280,
+  "accuracy": 0.9714285714285714,
+  "f1_macro": 0.9638802889576883,
+  "safe_precision": 1.0,
+  "safe_recall": 0.9,
+  "safe_f1": 0.9473684210526315,
+  "fraud_precision": 0.9615384615384616,
+  "fraud_recall": 1.0,
+  "fraud_f1": 0.9803921568627451,
+  "confusion_matrix": {
+    "tn_safe_as_safe": 72,
+    "fp_safe_as_fraud": 8,
+    "fn_fraud_as_safe": 0,
+    "tp_fraud_as_fraud": 200
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "text_train.csv": {
+    "rows": 13568,
+    "labels": {
+      "safe": 7788,
+      "fraud": 5780
+    },
+    "datasets": {
+      "phishing_email": 8145,
+      "sms_phishing": 4019,
+      "sms_spam": 507,
+      "manual_banking": 398,
+      "financial_scams": 363,
+      "manual_whatsapp": 122,
+      "manual_loan": 14
+    },
+    "channels": {
+      "email": 8145,
+      "sms": 4889,
+      "banking_notification": 398,
+      "whatsapp": 122,
+      "loan_ad": 14
+    },
+    "manual_rows": 534,
+    "augmented_rows": 0,
+    "duplicate_cleaned_text": 0,
+    "mean_cleaned_len": 1078.1,
+    "p95_cleaned_len": 4068.0
+  },
+  "text_val.csv": {
+    "rows": 2912,
+    "labels": {
+      "safe": 1671,
+      "fraud": 1241
+    },
+    "datasets": {
+      "phishing_email": 1746,
+      "sms_phishing": 862,
+      "sms_spam": 109,
+      "manual_banking": 86,
+      "financial_scams": 78,
+      "manual_whatsapp": 27,
+      "manual_loan": 4
+    },
+    "channels": {
+      "email": 1746,
+      "sms": 1049,
+      "banking_notification": 86,
+      "whatsapp": 27,
+      "loan_ad": 4
+    },
+    "manual_rows": 117,
+    "augmented_rows": 0,
+    "duplicate_cleaned_text": 0,
+    "mean_cleaned_len": 1037.7,
+    "p95_cleaned_len": 3715.2
+  },
+  "text_test.csv": {
+    "rows": 2912,
+    "labels": {
+      "safe": 1671,
+      "fraud": 1241
+    },
+    "datasets": {
+      "phishing_email": 1746,
+      "sms_phishing": 862,
+      "sms_spam": 109,
+      "manual_banking": 86,
+      "financial_scams": 78,
+      "manual_whatsapp": 27,
+      "manual_loan": 4
+    },
+    "channels": {
+      "email": 1746,
+      "sms": 1049,
+      "banking_notification": 86,
+      "whatsapp": 27,
+      "loan_ad": 4
+    },
+    "manual_rows": 117,
+    "augmented_rows": 0,
+    "duplicate_cleaned_text": 0,
+    "mean_cleaned_len": 1135.8,
+    "p95_cleaned_len": 4389.7
+  },
+  "combined": {
+    "rows": 19392,
+    "source_pct": {
+      "phishing_email": 60.01,
+      "sms_phishing": 29.62,
+      "sms_spam": 3.74,
+      "manual_banking": 2.94,
+      "financial_scams": 2.68,
+      "manual_whatsapp": 0.91,
+      "manual_loan": 0.11
+    },
+    "label_pct": {
+      "safe": 57.39,
+      "fraud": 42.61
+    },
+    "manual_pct": 3.96,
+    "email_pct": 60.01,
+    "sms_like_pct": 39.99
+  }
+}

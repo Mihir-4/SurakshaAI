@@ -1,0 +1,4 @@
+split,rows,safe,fraud
+train,13626,7817,5809
+val,2924,1677,1247
+test,2924,1677,1247

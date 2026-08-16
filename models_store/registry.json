@@ -1,0 +1,31 @@
+[
+  {
+    "artifact_path": "models_store/ml/best_text_ml.pkl",
+    "calibration_method": "platt_scaling",
+    "dataset_version": "v1",
+    "decision_threshold": 0.5,
+    "feature_version": "v1",
+    "hyperparameters": {
+      "calibration": "sigmoid",
+      "tfidf_max_features": 80000
+    },
+    "metrics": {
+      "test_accuracy": 0.9678522571819426,
+      "test_f1_macro": 0.9671617682198328,
+      "test_fraud_f1": 0.9624,
+      "test_fraud_precision": 0.960095770151636,
+      "test_fraud_recall": 0.9647153167602245,
+      "test_fraud_recall_5fpr": 0.9815557337610264,
+      "test_pr_auc": 0.9932312805741302,
+      "test_roc_auc": 0.9949479227187588,
+      "test_safe_precision": 0.9736684619988031,
+      "test_safe_recall": 0.9701848539057841
+    },
+    "model_name": "xgboost_text",
+    "model_type": "ml",
+    "notes": "train=13626, val=2924, test=2924",
+    "trained_at": "2026-08-12T07:50:10.238651+00:00",
+    "training_seed": 42,
+    "version": "v1"
+  }
+]

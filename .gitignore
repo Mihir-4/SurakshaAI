@@ -1,0 +1,256 @@
+# ============================================================
+# SURAKSHAAI - DEPLOYMENT GITIGNORE
+# ============================================================
+
+
+# ------------------------------------------------------------
+# 1. ENVIRONMENT / SECRETS
+# ------------------------------------------------------------
+
+.env
+.env.*
+!.env.example
+
+*.pem
+*.key
+*.secret
+secrets/
+credentials/
+
+
+# ------------------------------------------------------------
+# 2. PYTHON
+# ------------------------------------------------------------
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+*.so
+
+.Python
+
+.venv/
+venv/
+env/
+ENV/
+
+pip-wheel-metadata/
+build/
+develop-eggs/
+dist/
+eggs/
+.eggs/
+
+*.egg-info/
+.installed.cfg
+*.egg
+
+
+# ------------------------------------------------------------
+# 3. JUPYTER / KAGGLE
+# ------------------------------------------------------------
+
+.ipynb_checkpoints/
+
+.kaggle/
+
+# Training notebooks are archived and are NOT deployment files
+archive/
+
+
+# ------------------------------------------------------------
+# 4. DATASETS
+# ------------------------------------------------------------
+
+# Raw training datasets
+data/raw/
+
+# Temporary/intermediate datasets
+data/interim/
+
+# Processed training datasets
+data/processed/
+
+# External benchmark/test datasets
+data/external/
+
+
+# ------------------------------------------------------------
+# 5. MODEL TRAINING ARTIFACTS
+# ------------------------------------------------------------
+
+
+# PyTorch / TensorFlow / other binary checkpoints
+*.ckpt
+
+*.hdf5
+
+
+# Generic model binaries
+*.bin
+
+
+# ------------------------------------------------------------
+# 6. DEVELOPMENT / TEMPORARY MODEL DIRECTORIES
+# ------------------------------------------------------------
+
+# NLP model cache / development artifacts
+models_store/nlp/
+
+# Deep-learning models are kept outside normal Git tracking
+# because transformer weights can exceed GitHub's 100 MB limit.
+models_store/dl/
+
+
+# ------------------------------------------------------------
+# 7. TEMPORARY / GENERATED REPORT DATA
+# ------------------------------------------------------------
+
+# Raw/generated audit data
+reports/dataset_raw_audit.csv
+reports/dataset_raw_audit_detailed.csv
+reports/raw_dataset_audit.csv
+
+# Benchmark prediction dumps
+reports/gold_benchmark_predictions.csv
+
+# Dataset split details
+reports/processed_channel_by_split.csv
+reports/processed_label_by_split.csv
+reports/processed_source_by_split.csv
+
+
+# ------------------------------------------------------------
+# 8. DEVELOPMENT-ONLY SCRIPTS
+# ------------------------------------------------------------
+
+# Archive/development utility
+scripts/organize_archive.py
+
+# These are useful for training/research but not required
+# by the deployed application:
+scripts/prepare_kaggle_data.py
+scripts/train_ml.py
+scripts/train_transformer_kaggle.py
+scripts/train_url_upi.py
+scripts/select_best_models.py
+
+
+# ------------------------------------------------------------
+# 9. LOCAL DATABASE / DATABASE ARTIFACTS
+# ------------------------------------------------------------
+
+*.sqlite
+*.sqlite3
+*.db
+*.db-shm
+*.db-wal
+
+
+# ------------------------------------------------------------
+# 10. LOGS
+# ------------------------------------------------------------
+
+*.log
+logs/
+
+
+# ------------------------------------------------------------
+# 11. OS FILES
+# ------------------------------------------------------------
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+
+
+# ------------------------------------------------------------
+# 12. IDE / EDITOR
+# ------------------------------------------------------------
+
+.vscode/
+.idea/
+
+*.swp
+*.swo
+
+
+# ------------------------------------------------------------
+# 13. TEMPORARY FILES
+# ------------------------------------------------------------
+
+tmp/
+temp/
+.cache/
+
+*.tmp
+*.temp
+
+
+# ------------------------------------------------------------
+# 14. FRONTEND BUILD / NODE ARTIFACTS
+# ------------------------------------------------------------
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+dist/
+build/
+
+
+# ------------------------------------------------------------
+# 15. LOCAL DEPLOYMENT / DOCKER OVERRIDES
+# ------------------------------------------------------------
+
+docker-compose.override.yml
+docker-compose.local.yml
+
+
+# ------------------------------------------------------------
+# 16. LOCAL TEST OUTPUT
+# ------------------------------------------------------------
+
+coverage/
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+
+# ------------------------------------------------------------
+# 17. EXPLICITLY KEEP IMPORTANT DEPLOYMENT FILES
+# ------------------------------------------------------------
+
+# These are intentionally NOT ignored:
+#
+# src/
+# web/
+# alembic/
+# alembic.ini
+# requirements.txt
+# README.md
+# PROJECT_PROGRESS.md
+# .gitattributes
+# models_store/registry.json
+# models_store/selected_models.json
+# models_store/ml/feature_names.json
+
+# Non-production ML model artifacts
+models_store/ml/random_forest.pkl
+models_store/ml/decision_tree.pkl
+models_store/ml/logistic_regression.pkl
+models_store/ml/xgboost_text.pkl
+
+# Training-only artifacts
+models_store/ml/feature_names.json

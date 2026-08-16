@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SurakshaAI — AI Financial Fraud Detection for India</title>
+  <meta name="description" content="AI-powered scam detection for Indian banking — SMS, WhatsApp, Email, UPI, and Screenshot analysis in Hindi, Marathi, Gujarati and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- ═══════════════════════════════════════ HEADER ═══════════════════════ -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            <path d="M9 12l2 2 4-4"></path>
+          </svg>
+        </div>
+        <div class="brand-title">
+          <h1 data-i18n="app_name">SurakshaAI</h1>
+          <p data-i18n="app_tagline">AI-Powered Fraud Detection</p>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <!-- Language Switcher Dropdown -->
+        <div class="lang-switcher" id="lang-switcher">
+          <button class="lang-btn" id="lang-btn" onclick="toggleLangDropdown()" title="Change Language">
+            <span id="lang-flag">🇮🇳</span>
+            <span id="lang-label">EN</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="lang-dropdown hidden" id="lang-dropdown">
+            <div class="lang-dropdown-title" data-i18n="lang_select">Select Language</div>
+            <button class="lang-option active" onclick="selectLang('en')">🇮🇳 English</button>
+            <button class="lang-option" onclick="selectLang('hi')">🇮🇳 हिंदी Hindi</button>
+            <button class="lang-option" onclick="selectLang('mr')">🇮🇳 मराठी Marathi</button>
+            <button class="lang-option" onclick="selectLang('gu')">🇮🇳 ગુજરાતી Gujarati</button>
+            <button class="lang-option" onclick="selectLang('bn')">🇧🇩 বাংলা Bengali</button>
+          </div>
+        </div>
+
+        <!-- API Status Badge -->
+        <div class="status-badge" id="api-status-badge">
+          <span class="pulse-dot"></span>
+          <span id="api-status-text">Connecting...</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ═══════════════════════════════════════ NAV TABS ═════════════════════ -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" id="tab-btn-studio" onclick="switchMainTab('studio')">
+        <span>🛡️</span> <span data-i18n="tab_studio">Detection Studio</span>
+      </button>
+      <button class="tab-btn" id="tab-btn-history" onclick="switchMainTab('history')">
+        <span>📜</span> <span data-i18n="tab_history">History</span>
+      </button>
+      <button class="tab-btn" id="tab-btn-analytics" onclick="switchMainTab('analytics')">
+        <span>📊</span> <span data-i18n="tab_analytics">Analytics</span>
+      </button>
+      <button class="tab-btn" id="tab-btn-assistant" onclick="switchMainTab('assistant')">
+        <span>🤖</span> <span data-i18n="tab_assistant">AI Safety Assistant</span>
+      </button>
+    </nav>
+
+    <!-- ═══════════════════════════════════════ TAB 1: DETECTION STUDIO ═════ -->
+    <main id="tab-content-studio">
+      <div class="glass-card">
+
+        <!-- Studio Header -->
+        <div class="studio-header">
+          <div>
+            <h2 class="studio-title" data-i18n="studio_title">Analyze Communication</h2>
+            <p class="studio-subtitle" data-i18n="studio_subtitle">Paste suspicious text or upload a screenshot for AI fraud detection</p>
+          </div>
+        </div>
+
+        <!-- Input Channel Mode Tabs — Text or Screenshot -->
+        <div class="mode-bar">
+          <button class="mode-btn active" id="mode-btn-text" onclick="switchInputMode('text')">
+            <span>📝</span> <span data-i18n="mode_sms">Text / SMS / Chat</span>
+          </button>
+          <button class="mode-btn mode-btn-image" id="mode-btn-image" onclick="switchInputMode('image')">
+            <span>📷</span> <span data-i18n="mode_image">Screenshot</span>
+          </button>
+        </div>
+
+        <!-- Preset Samples -->
+        <div class="preset-section" id="preset-section">
+          <div class="preset-title">⚡ Quick Preset Samples (Click to test):</div>
+          <div class="preset-chips">
+            <button class="preset-chip" onclick="loadSample('anydesk')">🚨 AnyDesk Remote Scam</button>
+            <button class="preset-chip" onclick="loadSample('otp')">🔑 OTP Theft Request</button>
+            <button class="preset-chip" onclick="loadSample('upi')">💸 UPI Refund Collect</button>
+            <button class="preset-chip" onclick="loadSample('loan')">📄 Upfront Fee Loan</button>
+            <button class="preset-chip" onclick="loadSample('safe_sms')">🏦 Legitimate Debit SMS</button>
+            <button class="preset-chip" onclick="loadSample('safe_alert')">🔒 Safe Login Advisory</button>
+          </div>
+        </div>
+
+        <!-- Text Input (Text mode) -->
+        <div class="input-group" id="input-group-text">
+          <label class="input-label" for="input-text-content" data-i18n="studio_title">Communication Content</label>
+          <textarea id="input-text-content" class="text-textarea" data-i18n="placeholder_sms" placeholder="Paste SMS, WhatsApp message, or email body here..."></textarea>
+        </div>
+
+        <!-- Image Upload (Screenshot mode) -->
+        <div class="input-group hidden" id="input-group-image">
+          <label class="input-label" data-i18n="label_image_upload">Upload Screenshot</label>
+          <div class="upload-zone" id="upload-zone"
+               onclick="document.getElementById('file-input').click()"
+               ondragover="onDragOver(event)"
+               ondragleave="onDragLeave(event)"
+               ondrop="onDrop(event)">
+            <input type="file" id="file-input" accept="image/*" onchange="onFileSelect(event)" style="display:none">
+            <div class="upload-icon" id="upload-icon">📷</div>
+            <div class="upload-text" id="upload-main-text" data-i18n="image_drop_text">Drag & drop image here or click to browse</div>
+            <div class="upload-sub" data-i18n="image_formats">Supports PNG, JPG, WebP — Max 10MB</div>
+          </div>
+          <!-- Image preview -->
+          <div class="image-preview hidden" id="image-preview-container">
+            <img id="image-preview" src="" alt="Screenshot preview">
+            <button class="preview-remove" onclick="clearImageUpload()" title="Remove">✕</button>
+            <div class="preview-name" id="preview-filename">screenshot.png</div>
+          </div>
+        </div>
+
+        <!-- Analyze Button -->
+        <button class="btn-submit" id="btn-analyze" onclick="runAnalysis()">
+          <span>🛡️</span>
+          <span id="btn-analyze-text" data-i18n="btn_analyze">Analyze Communication</span>
+        </button>
+      </div>
+
+      <!-- ════════ RESULTS PANEL ════════ -->
+      <div id="results-panel" class="hidden">
+        <div class="results-grid">
+
+          <!-- LEFT: Risk Gauge -->
+          <div class="glass-card risk-meter-box">
+            <div class="meter-score-circle" id="meter-circle">
+              <span class="meter-number" id="meter-number">0</span>
+              <span class="meter-label">/ 100 RISK</span>
+            </div>
+            <div class="risk-level-badge" id="risk-badge">SAFE</div>
+            <div class="meter-info-text">
+              <span style="font-weight:600;color:#fff;">Unified Fraud Radar:</span><br>
+              Ensemble score across ML, Deep Learning & Explainable Safety Rules.
+            </div>
+          </div>
+
+          <!-- RIGHT: Evidence + Actions -->
+          <div class="glass-card">
+            <h3 class="card-section-title">🔍 <span data-i18n="result_evidence">Evidence Found</span></h3>
+
+            <div class="flag-tags" id="flag-tags-container">
+              <span class="flag-tag safe-tag">no_fraud_rules_triggered</span>
+            </div>
+
+            <div class="evidence-section">
+              <div class="evidence-section-label" data-i18n="result_evidence">Triggered Evidence:</div>
+              <ul class="evidence-list" id="evidence-list">
+                <li>No suspicious fraud indicators detected.</li>
+              </ul>
+            </div>
+
+            <div>
+              <div class="evidence-section-label" data-i18n="result_immediate">Immediate Actions:</div>
+              <ul class="action-list" id="action-list">
+                <li>Verify transaction details inside your official bank application.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- OCR Extracted Text (image mode only) -->
+        <div class="glass-card hidden" id="ocr-card" style="margin-top:1.25rem; border:1px solid rgba(139,92,246,0.3); background:rgba(139,92,246,0.05);">
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem;">
+            <span style="font-size:1.2rem;">📄</span>
+            <h3 style="font-family:var(--font-heading);font-size:1rem;color:#C084FC;" data-i18n="result_ocr">Extracted Text from Screenshot</h3>
+          </div>
+          <pre class="ocr-text-block" id="ocr-text-display"></pre>
+        </div>
+
+        <!-- AI SAFETY ASSISTANT CARD -->
+        <div class="glass-card ai-card" id="ai-assistant-card">
+          <div class="ai-card-header">
+            <div style="display:flex;align-items:center;gap:0.6rem;">
+              <span style="font-size:1.4rem;">🤖</span>
+              <div>
+                <h3 style="font-family:var(--font-heading);font-size:1.15rem;color:#38BDF8;">Suraksha AI Safety Assistant</h3>
+                <p style="font-size:0.78rem;color:var(--text-secondary);">Real-time AI Advisory & Fraud Explanation</p>
+              </div>
+            </div>
+            <span class="flag-tag ai-badge">AI Active</span>
+          </div>
+
+          <div class="ai-summary-text" id="ai-summary-text">Analyzing communication pattern...</div>
+
+          <div class="ai-two-col">
+            <!-- DO NOT -->
+            <div class="do-not-box">
+              <div class="do-not-label">🚫 <span data-i18n="result_do_not">DO NOT:</span></div>
+              <ul class="evidence-list" id="ai-donot-list">
+                <li>Do not click links or share OTP/PIN.</li>
+              </ul>
+            </div>
+            <!-- SAFE ALTERNATIVES -->
+            <div class="alternatives-box">
+              <div class="alternatives-label">💡 <span data-i18n="result_actions">SAFE ALTERNATIVE:</span></div>
+              <ul class="action-list" id="ai-alternatives-list">
+                <li>Call the helpline on your debit card.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Emergency Banner -->
+          <div class="emergency-banner">
+            <div style="display:flex;align-items:center;gap:0.6rem;">
+              <span style="font-size:1.2rem;">📞</span>
+              <span style="font-size:0.85rem;color:#FDE047;"><strong data-i18n="cybercrime_helpline">Cybercrime Helpline:</strong> If you lost money or shared credentials, call immediately.</span>
+            </div>
+            <div style="display:flex;gap:0.5rem;flex-shrink:0;">
+              <span class="flag-tag" style="background:#F59E0B;color:#000;font-weight:700;border:none;">CALL 1930</span>
+              <a href="https://cybercrime.gov.in" target="_blank" class="flag-tag" style="background:rgba(255,255,255,0.1);color:#fff;text-decoration:none;" data-i18n="cybercrime_portal">cybercrime.gov.in</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ═══════════════════════════════════════ TAB 2: HISTORY ═══════════════ -->
+    <section id="tab-content-history" class="hidden">
+      <div class="glass-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+          <h2 style="font-family:var(--font-heading);font-size:1.25rem;" data-i18n="history_title">Analysis History</h2>
+          <button class="btn-secondary-sm" onclick="clearHistory()" data-i18n="history_clear">Clear History</button>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Channel</th>
+              <th>Content</th>
+              <th data-i18n="result_score">Risk Score</th>
+              <th>Risk Level</th>
+              <th>Flags</th>
+            </tr>
+          </thead>
+          <tbody id="history-table-body">
+            <tr>
+              <td colspan="6" style="text-align:center;color:var(--text-muted);" data-i18n="history_empty">Loading audit history...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════ TAB 3: ANALYTICS ════════════ -->
+    <section id="tab-content-analytics" class="hidden">
+      <div class="analytics-grid">
+        <div class="stat-card">
+          <div class="stat-number" id="stat-total">0</div>
+          <div class="stat-label" data-i18n="analytics_total">Total Analyses</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="stat-fraud" style="color:#EF4444;">0</div>
+          <div class="stat-label" data-i18n="analytics_fraud">Fraud Detected</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="stat-safe" style="color:#10B981;">0</div>
+          <div class="stat-label" data-i18n="analytics_safe">Safe Messages</div>
+        </div>
+      </div>
+      <div class="glass-card">
+        <h3 style="font-family:var(--font-heading);font-size:1.1rem;margin-bottom:1rem;">🔥 Top Intercepted Fraud Patterns</h3>
+        <ul class="evidence-list" id="top-patterns-list">
+          <li>Loading analytics summary...</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════ TAB 4: AI SAFETY ASSISTANT ═══ -->
+    <section id="tab-content-assistant" class="hidden">
+      <div class="glass-card">
+        <div class="studio-header">
+          <div>
+            <h2 class="studio-title" data-i18n="assistant_title">AI Safety Advisor</h2>
+            <p class="studio-subtitle" data-i18n="assistant_subtitle">Ask any cybersecurity or financial safety question in your preferred language</p>
+          </div>
+        </div>
+
+        <!-- Quick Question Chips -->
+        <div class="preset-section">
+          <div class="preset-title">⚡ Common Safety Questions (Click to ask):</div>
+          <div class="preset-chips">
+            <button class="preset-chip" onclick="askQuickQuestion('What should I do immediately if money was debited fraudulently?')">🚨 What to do if money was debited?</button>
+            <button class="preset-chip" onclick="askQuickQuestion('Is installing AnyDesk or QuickSupport safe for bank support?')">📱 Is AnyDesk or screen share safe?</button>
+            <button class="preset-chip" onclick="askQuickQuestion('Do I need to enter UPI PIN to receive money or refunds?')">💸 Do I enter UPI PIN to get refunds?</button>
+            <button class="preset-chip" onclick="askQuickQuestion('What is Cybercrime Helpline 1930 and how does it work?')">📞 What is 1930 Cybercell helpline?</button>
+          </div>
+        </div>
+
+        <!-- Question Input -->
+        <div class="input-group">
+          <textarea id="assistant-query-input" class="text-textarea" style="min-height:90px;" data-i18n="ask_placeholder" placeholder="Type your safety question here..."></textarea>
+        </div>
+
+        <button class="btn-submit" id="btn-ask-assistant" onclick="askAssistant()">
+          <span>🤖</span>
+          <span id="btn-ask-text" data-i18n="btn_ask">Ask Assistant</span>
+        </button>
+      </div>
+
+      <!-- ASSISTANT RESPONSE CARD -->
+      <div id="assistant-response-panel" class="hidden">
+        <div class="glass-card ai-card" style="margin-top:0;">
+          <div class="ai-card-header">
+            <div style="display:flex;align-items:center;gap:0.6rem;">
+              <span style="font-size:1.4rem;">💡</span>
+              <div>
+                <h3 style="font-family:var(--font-heading);font-size:1.1rem;color:#38BDF8;" id="assistant-q-display">Question</h3>
+                <p style="font-size:0.75rem;color:var(--text-secondary);">SurakshaAI Safety Advisory Response</p>
+              </div>
+            </div>
+            <span class="flag-tag ai-badge" id="assistant-source-badge">Verified Advice</span>
+          </div>
+
+          <div style="font-size:0.95rem;color:var(--text-primary);line-height:1.7;white-space:pre-wrap;" id="assistant-a-display">
+            Loading answer...
+          </div>
+
+          <!-- Helpline Banner -->
+          <div class="emergency-banner" style="margin-top:1.25rem;">
+            <div style="display:flex;align-items:center;gap:0.6rem;">
+              <span style="font-size:1.2rem;">📞</span>
+              <span style="font-size:0.85rem;color:#FDE047;"><strong>National Cybercrime Helpline:</strong> Call 1930 immediately to block fraudulent transactions.</span>
+            </div>
+            <div style="display:flex;gap:0.5rem;flex-shrink:0;">
+              <span class="flag-tag" style="background:#F59E0B;color:#000;font-weight:700;border:none;">CALL 1930</span>
+              <a href="https://cybercrime.gov.in" target="_blank" class="flag-tag" style="background:rgba(255,255,255,0.1);color:#fff;text-decoration:none;">cybercrime.gov.in</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /.app-container -->
+
+  <script src="/i18n.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

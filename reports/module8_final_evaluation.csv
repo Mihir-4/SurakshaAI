@@ -1,0 +1,9 @@
+scenario,samples,accuracy,f1_macro,safe_precision,safe_recall,safe_f1,fraud_precision,fraud_recall,fraud_f1
+fake_kyc,40,1.0,1.0,0.0,0.0,0.0,1.0,1.0,1.0
+loan_scam,35,1.0,1.0,0.0,0.0,0.0,1.0,1.0,1.0
+otp_pin_scam,35,1.0,1.0,0.0,0.0,0.0,1.0,1.0,1.0
+phishing_email,30,1.0,1.0,0.0,0.0,0.0,1.0,1.0,1.0
+safe_banking_notification,50,0.84,0.45652173913043476,1.0,0.84,0.9130434782608695,0.0,0.0,0.0
+safe_email,30,1.0,1.0,1.0,1.0,1.0,0.0,0.0,0.0
+upi_refund_scam,30,1.0,1.0,0.0,0.0,0.0,1.0,1.0,1.0
+whatsapp_social_engineering,30,1.0,1.0,0.0,0.0,0.0,1.0,1.0,1.0
